@@ -44,4 +44,47 @@ def open_main_menu():
         quit_application()
 
 
+def open_game():
+    """
+    Function that starts the game, looks for unfinished chains and if there's one
+    available provide user with a question / answer to guess, otherwise start new chain
+    """
+    print(f"It's your turn to {colored('answer a question!','yellow')}\n")
+
+
+def get_unfinished_chain(is_answer):
+    """
+    Returns random unfinished chain, parameter decides if chain should end with answer or question
+    """
+
+def create_new_chain():
+    """
+    Creates new chain starting with provided UserData
+    """
+
+def open_chain_viewer():
+    """
+    Opens the chain viewer where users can 
+    fetch finished chains by entering the finished chain IDs
+    """
+
+
+def quit_application():
+    """
+    Quits the application
+    """
+
+
+class UserData:
+    """
+    The data that will be submitted to our spreadsheet, contains bool for if it's a question/answer,
+    the string content and name/signature of person who wrote it
+    """
+    def __init__(self, is_answer, string_content, author, chain_id):
+        self.is_answer = is_answer
+        self.string_content = string_content
+        self.author = author
+        self.chain_id = chain_id
+    
+
 open_main_menu()
