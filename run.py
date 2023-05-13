@@ -56,8 +56,7 @@ def open_game():
     unfinished_chain_question = get_unfinished_chain_end(False)
     user_data_1 = user_data_2 = UserData
 
-
-    # If there's a chain to answer proceed normally
+    # First question, if there's a chain to answer proceed normally
     if unfinished_chain_question:
         # Prints question/answer for user to answer
         print(f"It's your turn to {colored('answer a question!','yellow')}\n")
@@ -70,6 +69,18 @@ def open_game():
         
         # Creates UserData object based on player input
         user_data_1 = question_answer_input(False)
+    
+    # Gets the last answer of a random unfinished chain
+    unfinished_chain_answer = get_unfinished_chain_end(True)
+
+    # Second question
+    if unfinished_chain_answer:
+        # Prints question/answer for user to answer
+        print(f"It's your turn to {colored('guess the question!','magenta')}\n")
+        print(f"{colored(f'Answer: ','magenta')} {unfinished_chain_question[0].content}")
+        
+        # Creates UserData object based on player input
+        user_data_2 = question_answer_input(False)
 
 
     print(user_data_1.to_json())
