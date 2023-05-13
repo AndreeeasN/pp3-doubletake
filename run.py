@@ -54,32 +54,60 @@ def open_game():
     """
     # Gets the last question of a random unfinished chain
     unfinished_chain_question = get_unfinished_chain_end(False)
-    
-    # If there's a chain to answer proceed normally, if not create new chain
+    user_data_1 = user_data_2 = UserData
+
+
+    # If there's a chain to answer proceed normally
     if unfinished_chain_question:
+        # Prints question/answer for user to answer
         print(f"It's your turn to {colored('answer a question!','yellow')}\n")
-
-        while True:
-            print(f"{colored('Question:','yellow')} {unfinished_chain_question[0].content}")
-            
-            # Checks for non-empty input
-            chain_answer = input(colored('Answer: ','magenta'))
-            if chain_answer:
-                break
-            else:
-                print(colored("Please enter a valid answer.","light_red"))
-
+        print(f"{colored(f'Question: ','yellow')} {unfinished_chain_question[0].content}")
+        
+        # Creates UserData object based on player input
+        user_data_1 = question_answer_input(True)
     else:
         print(f"You get to start a new chain! {colored('Ask a question!','yellow')}\n\n")
+        
+        # Creates UserData object based on player input
+        user_data_1 = question_answer_input(False)
+
+
+    print(user_data_1.to_json())
+    print(user_data_2.to_json())
+
+def question_answer_input(is_answer):
+    """
+    Function that awaits player input and returns UserData object. 
     
+    `is_answer` decides if the user is inputting answer or question
+    """
+    #Sets string and color to be printed before user input
+    qa_string_input = "Answer" if is_answer else "Question"
+    qa_string_color = "magenta" if is_answer else "yellow"
+    while True:
+        # Checks for non-empty input, loops while empty
+        user_answer = input(colored(f'{qa_string_input}: ',qa_string_color))
+        if user_answer:
+            # Allows user to input signature, defaults to "Anonymous" if left blank
+            print(f"\nAdd signature? (Leave blank to stay anonymous)")
+            user_signature = input(colored('Signature: ', 'cyan'))
+            if not user_signature: 
+                user_signature = "Anonymous"
+
+            # Returns new userData object based on user input
+            return UserData(user_answer, user_signature, is_answer)
+        else:
+            print(colored(f"Please enter a valid {qa_string_input.lower()}.","light_red"))
+
 def get_unfinished_chain_end(get_answer):
     """
-    Returns list of last entry of a random unfinished chain as [UserData, row, column] 
+    Returns last entry of a random unfinished chain as [UserData, row, column] 
 
     `get_answer` decides if an answer or question should be fetched.
     """
     # The worksheet containing all unfinished chains
     worksheet = SHEET.worksheet("unfinished_chains")
+
     # List of last entries in chains
     chain_end_list = []
 
@@ -119,8 +147,13 @@ def get_unfinished_chain_end(get_answer):
     else:
         return None
         
+def append_to_chain(user_data, unfinished_chain_end):
+    """
+    Appends `user_data` to the row of `unfinished_chain_end` 
+    """
+    
 
-def create_new_chain(data):
+def create_new_chain(user_data):
     """
     Creates new chain starting with provided UserData
     """
