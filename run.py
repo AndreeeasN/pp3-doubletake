@@ -29,7 +29,7 @@ def open_main_menu():
         f"Type {colored('3','light_red')} to {colored('Quit the application','light_red')}\n"
         )
     
-    # Checks for a valid input
+    # Checks for a non-empty input
     while True:
         menu_input = input()
         if menu_input in ("1","2","3"):
@@ -37,11 +37,13 @@ def open_main_menu():
         else:
             print("Invalid input, please try again")
 
+    # 1 -> play game, 2 -> view old chains, 3 -> exit
     if menu_input == "1":
         open_game()
     elif menu_input == "2":
         open_chain_viewer()
     elif menu_input == "3":
+        print("Exiting application...")
         exit()
 
 
@@ -51,12 +53,25 @@ def open_game():
     available provide user with a question / answer to guess, otherwise start new chain
     """
     # Gets the last question of a random unfinished chain
-    unfinished_chain = get_unfinished_chain_end(False)
-    print(unfinished_chain[0].to_json())
+    unfinished_chain_question = get_unfinished_chain_end(False)
     
-    print(f"It's your turn to {colored('answer a question!','yellow')}\n")
+    # If there's a chain to answer proceed normally, if not create new chain
+    if unfinished_chain_question:
+        print(f"It's your turn to {colored('answer a question!','yellow')}\n")
 
+        while True:
+            print(f"{colored('Question:','yellow')} {unfinished_chain_question[0].content}")
+            
+            # Checks for non-empty input
+            chain_answer = input(colored('Answer: ','magenta'))
+            if chain_answer:
+                break
+            else:
+                print(colored("Please enter a valid answer.","light_red"))
 
+    else:
+        print(f"You get to start a new chain! {colored('Ask a question!','yellow')}\n\n")
+    
 def get_unfinished_chain_end(get_answer):
     """
     Returns list of last entry of a random unfinished chain as [UserData, row, column] 
