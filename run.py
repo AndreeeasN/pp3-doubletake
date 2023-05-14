@@ -16,7 +16,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("PP3_sheet")
 
 
-def open_main_menu():
+def main():
     """
     Prints the main menu contents, offers options to play, view old chains or quit
     """
@@ -66,11 +66,6 @@ def start_game():
         
         # Creates UserData object based on player input
         user_data_1 = question_answer_input(True)
-    else:
-        print(f"You get to start a new chain! {colored('Ask a question!','yellow')}\n\n")
-        
-        # Creates UserData object based on player input
-        user_data_1 = question_answer_input(False)
     
     # Gets the last answer of a random unfinished chain
     unfinished_chain_answer = get_unfinished_chain_end(True)
@@ -83,16 +78,22 @@ def start_game():
         
         # Creates UserData object based on player input
         user_data_2 = question_answer_input(False)
+    else:
+        print(f"You get to start a new chain! {colored('Ask a question!','magenta')}\n\n")
+        
+        # Creates UserData object based on player input
+        user_data_2 = question_answer_input(False)
 
-    # Appends user answer to chain, start new chain if assigned none
+
+    # Appends user answer to chain
     if unfinished_chain_question:
         append_data_to_chain(user_data_1, unfinished_chain_question)
-    else:
-        create_new_chain(user_data_1)
     
-    # Appends question to answer
+    # Appends question to chain, start new chain if assigned none
     if unfinished_chain_answer:
         append_data_to_chain(user_data_2, unfinished_chain_answer)
+    else:
+        create_new_chain(user_data_2)
 
     move_finished_chains()
 
@@ -135,7 +136,7 @@ def get_unfinished_chain_end(get_answer):
     # List of last entries in chains
     chain_end_list = []
 
-    # Iterate over each row in worksheet (Starts at 1, default length is 1000)
+    # Iterate over each row in worksheet (Starts at 1, default length is 999)
     for row in range(1, worksheet.row_count + 1):
         # Get the values of the current row
         row_values = worksheet.row_values(row)
@@ -203,12 +204,13 @@ def move_finished_chains():
     unfinished_worksheet = SHEET.worksheet("unfinished_chains")
     finished_worksheet = SHEET.worksheet("finished_chains")
 
-    # Iterate over each row in unfinished worksheet (Starts at 1, default length is 1000)
+    # Iterate over each row in unfinished worksheet (Starts at 1, default length is 999)
     i = 1
     while i < unfinished_worksheet.row_count + 1:
         # Get the values of the current row
         row_values = unfinished_worksheet.row_values(i)
-
+        
+        # If row is empty, break
         if not row_values: 
             break
 
@@ -218,6 +220,7 @@ def move_finished_chains():
             unfinished_worksheet.delete_rows(i)
             continue
         i += 1
+
 
 def open_chain_viewer():
     """
@@ -243,4 +246,4 @@ class UserData:
         return json.dumps(self.__dict__)
 
 
-open_main_menu()
+main()
