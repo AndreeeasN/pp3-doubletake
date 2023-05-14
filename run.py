@@ -31,7 +31,7 @@ def main():
     
     # Checks for a non-empty input
     while True:
-        menu_input = input()
+        menu_input = input("Input: \n")
         if menu_input in ("1","2","3"):
             break
         else:
@@ -84,7 +84,6 @@ def start_game():
         # Creates UserData object based on player input
         user_data_2 = question_answer_input(False)
 
-
     # Appends user answer to chain
     if unfinished_chain_question:
         append_data_to_chain(user_data_1, unfinished_chain_question)
@@ -96,6 +95,9 @@ def start_game():
         create_new_chain(user_data_2)
 
     move_finished_chains()
+    
+    # Debug restart, will show post-game menu in future
+    main()
 
 
 def question_answer_input(is_answer):
