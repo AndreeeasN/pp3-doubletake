@@ -84,7 +84,7 @@ def start_game():
         # Creates UserData object based on player input
         user_data_2 = question_answer_input(False)
 
-    # Appends answer to question chain, else start new chain
+    # Appends user answer to chain, start new chain if assigned none
     if unfinished_chain_question:
         append_data_to_chain(user_data_1, unfinished_chain_question)
     else:
@@ -93,6 +93,8 @@ def start_game():
     # Appends question to answer
     if unfinished_chain_answer:
         append_data_to_chain(user_data_2, unfinished_chain_answer)
+
+    move_finished_chains()
 
 
 def question_answer_input(is_answer):
@@ -126,13 +128,14 @@ def get_unfinished_chain_end(get_answer):
 
     `get_answer` decides if an answer or question should be fetched.
     """
+    print(colored(f'\n[Fetching data...]\n\n','dark_grey'))
     # The worksheet containing all unfinished chains
     worksheet = SHEET.worksheet("unfinished_chains")
 
     # List of last entries in chains
     chain_end_list = []
 
-    # Iterate over each row in worksheet (Starts at 1)
+    # Iterate over each row in worksheet (Starts at 1, default length is 1000)
     for row in range(1, worksheet.row_count + 1):
         # Get the values of the current row
         row_values = worksheet.row_values(row)
@@ -165,6 +168,7 @@ def get_unfinished_chain_end(get_answer):
     # if chain_end_list has viable entries, return a random one
     if chain_end_list:
         return random.choice(chain_end_list)
+    # else return none, will cause player to start new chain
     else:
         return None
 
@@ -183,7 +187,6 @@ def append_data_to_chain(user_data, unfinished_chain_end):
     else:
         print("Question/Answer has already been answered")
 
-    print(str(row) + str(column) + user_data.to_json())
 
 def create_new_chain(user_data):
     """
@@ -191,6 +194,30 @@ def create_new_chain(user_data):
     """
     worksheet = SHEET.worksheet("unfinished_chains")
     worksheet.append_row([user_data.to_json()])
+
+
+def move_finished_chains():
+    """
+    Find all chains with 8 entries or more and move them to the page of finished chains 
+    """
+    unfinished_worksheet = SHEET.worksheet("unfinished_chains")
+    finished_worksheet = SHEET.worksheet("finished_chains")
+
+    # Iterate over each row in unfinished worksheet (Starts at 1, default length is 1000)
+    i = 1
+    while i < unfinished_worksheet.row_count + 1:
+        # Get the values of the current row
+        row_values = unfinished_worksheet.row_values(i)
+
+        if not row_values: 
+            break
+
+        # If the row has 8 entries or more, move to finished worksheet
+        if len(row_values) >= 8:
+            finished_worksheet.append_row(row_values)
+            unfinished_worksheet.delete_rows(i)
+            continue
+        i += 1
 
 def open_chain_viewer():
     """
