@@ -236,10 +236,14 @@ def get_unfinished_chain_end(get_answer):
             if user_data.is_answer == get_answer:
                 chain_end_list.append([user_data, row, len(row_values)])
 
+    # If on second player input with too few entries in worksheet return None
+    # This will cause player to start new chain instead
+    if get_answer and len(chain_end_list) < 4:
+        return None
+        
     # if chain_end_list has viable entries, return a random one
     if chain_end_list:
         return random.choice(chain_end_list)
-    # else return none, will cause player to start new chain
     else:
         return None
 
