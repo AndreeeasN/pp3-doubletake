@@ -18,15 +18,24 @@ SHEET = GSPREAD_CLIENT.open("PP3_sheet")
 
 def main():
     """
-    Prints the main menu contents, offers options to play, view old chains or quit
+    Function called on startup, prints welcome message and offers options to play, view old chains or quit
     """
     print(
-        f"Welcome to {colored('[game name]','yellow')}, a python-based game of telephone!\n"+
+        f"\n\nWelcome to {colored('[game name]','yellow')}, a python-based game of telephone!\n"+
         f"In {colored('[game name]','yellow')} players will create chains of alternating questions and"+
-        f" answers\nwhile attempting to guess what the previous person asked, get creative and have fun!\n\n"+
-        f"Type {colored('1','light_green')} to {colored('Start playing','light_green')}\n"+
+        f" answers\nwhile attempting to guess what the previous person asked, get creative and have fun!\n"
+        )
+    
+    print_menu_options(True)
+
+
+def print_menu_options(first_time_startup):
+    play_string = "Start playing" if first_time_startup else "Play again"
+
+    print(
+        f"Type {colored('1','light_green')} to {colored(play_string,'light_green')}\n"+
         f"Type {colored('2','cyan')} to {colored('View finished chains','cyan')}\n"+
-        f"Type {colored('3','light_red')} to {colored('Quit the application','light_red')}\n"
+        f"Type {colored('3','light_red')} to {colored('Quit the application','light_red')}"
         )
     
     # Checks for a non-empty input
@@ -43,7 +52,7 @@ def main():
     elif menu_input == "2":
         open_chain_viewer()
     elif menu_input == "3":
-        print("Exiting application...")
+        print(colored("[Exiting application...]", "dark_grey"))
         exit()
 
 
@@ -98,17 +107,43 @@ def open_post_game_menu(user_data_1, user_data_2, chain_question, chain_answer):
     # Prints the chains the user interacted with before they're altered or moved
     chain_1_values = worksheet.row_values(chain_question[1])
     chain_2_values = worksheet.row_values(chain_answer[1])  
-    print_chain(chain_1_values)
-    print_chain(chain_2_values)
 
-    exit()
+    print_chain(chain_1_values)
+    print(
+        f"{colored(f'Your answer: ', 'magenta')} "+
+        f"{user_data_1.content} {colored('- ' + user_data_1.author, 'light_green')}"
+        )
+    
+    print_chain(chain_2_values)
+    print(
+        f"{colored(f'Your question: ', 'yellow')} "+
+        f"{user_data_2.content} {colored('- ' + user_data_2.author, 'light_green')}\n"+
+        "You're all done! The chains you contributed to are shown above!\n"+
+        f"\n\n{colored('[Saving data...]', 'dark_grey')}\n\n"
+        )
+    
+    # Appends user answer to chain
+    if chain_question:
+        append_data_to_chain(worksheet, user_data_1, chain_question)
+    
+    # Appends question to chain, start new chain if assigned none
+    if chain_answer:
+        append_data_to_chain(worksheet, user_data_2, chain_answer)
+    else:
+        create_new_chain(worksheet, user_data_2)
+
+    # Move all chains with 8 entries or more to finished worksheet
+    move_finished_chains()
+    
+    # Print options to play again, view finished chains or quit
+    print_menu_options(False)
 
 
 def print_chain(chain):
     """
     Prints all questions/answers and authors in a chain
     """
-    print(colored(f'\n[Printing chain...]\n','dark_grey'))
+    print(colored(f'\n\n[Printing chain...]\n\n','dark_grey'))
     entry_num = 1
     
     for entry in chain:
@@ -120,7 +155,7 @@ def print_chain(chain):
             continue
         else:
             if entry_num == 1:
-                print(f"Chain started by: {colored(user_data['author'], 'yellow')}!\n")
+                print(f"Chain started by: {colored(user_data['author'], 'light_green')}!\n")
 
             qa_string = "Answer" if user_data["is_answer"] else "Question"
             qa_string_color = "magenta" if user_data["is_answer"] else "yellow"
@@ -164,7 +199,7 @@ def get_unfinished_chain_end(get_answer):
 
     `get_answer` decides if an answer or question should be fetched.
     """
-    print(colored(f'\n[Fetching data...]\n\n','dark_grey'))
+    print(colored(f'\n\n[Fetching data...]\n\n','dark_grey'))
     # The worksheet containing all unfinished chains
     worksheet = SHEET.worksheet("unfinished_chains")
 
@@ -200,7 +235,7 @@ def get_unfinished_chain_end(get_answer):
             # Appends [userData, row, column] to our list
             if user_data.is_answer == get_answer:
                 chain_end_list.append([user_data, row, len(row_values)])
-    
+
     # if chain_end_list has viable entries, return a random one
     if chain_end_list:
         return random.choice(chain_end_list)
