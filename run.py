@@ -22,8 +22,8 @@ def main():
     """
     print(
         f"Welcome to {colored('[game name]','yellow')}, a python-based game of telephone!\n"+
-        f"In {colored('[game name]','yellow')} players will create chains of alternating questions and answers\n"+
-        f"while attempting to guess what the previous person asked, get creative and have fun!\n\n"+
+        f"In {colored('[game name]','yellow')} players will create chains of alternating questions and"+
+        f" answers\nwhile attempting to guess what the previous person asked, get creative and have fun!\n\n"+
         f"Type {colored('1','light_green')} to {colored('Start playing','light_green')}\n"+
         f"Type {colored('2','cyan')} to {colored('View finished chains','cyan')}\n"+
         f"Type {colored('3','light_red')} to {colored('Quit the application','light_red')}\n"
@@ -31,7 +31,7 @@ def main():
     
     # Checks for a non-empty input
     while True:
-        menu_input = input("Input: \n")
+        menu_input = input("\nInput: ")
         if menu_input in ("1","2","3"):
             break
         else:
@@ -55,7 +55,7 @@ def start_game():
     # Gets the last question of a random unfinished chain
     unfinished_chain_question = get_unfinished_chain_end(False)
 
-    # Declares first and second question as UserData objects
+    # Declares first and second question for later use
     user_data_1 = user_data_2 = None
 
     # First question, if there's a chain to answer proceed normally otherwise start new chain
@@ -83,22 +83,55 @@ def start_game():
         
         # Creates UserData object based on player input
         user_data_2 = question_answer_input(False)
-
-    # Appends user answer to chain
-    if unfinished_chain_question:
-        append_data_to_chain(user_data_1, unfinished_chain_question)
     
-    # Appends question to chain, start new chain if assigned none
-    if unfinished_chain_answer:
-        append_data_to_chain(user_data_2, unfinished_chain_answer)
-    else:
-        create_new_chain(user_data_2)
+    # Opens the post game menu
+    open_post_game_menu(user_data_1, user_data_2, unfinished_chain_question, unfinished_chain_answer)
 
-    move_finished_chains()
+
+def open_post_game_menu(user_data_1, user_data_2, chain_question, chain_answer):
+    """
+    Opens the post-game menu, prints the chains the user has answered and appends
+    their answers to their respective chains.
+    """
+    worksheet = SHEET.worksheet("unfinished_chains")
     
-    # Debug restart, will show post-game menu in future
-    main()
+    # Prints the chains the user interacted with before they're altered or moved
+    chain_1_values = worksheet.row_values(chain_question[1])
+    chain_2_values = worksheet.row_values(chain_answer[1])  
+    print_chain(chain_1_values)
+    print_chain(chain_2_values)
 
+    exit()
+
+
+def print_chain(chain):
+    """
+    Prints all questions/answers and authors in a chain
+    """
+    print(colored(f'\n[Printing chain...]\n','dark_grey'))
+    entry_num = 1
+    
+    for entry in chain:
+        # Tries loading json-string and if succesful prints question/answer + author
+        try:
+            user_data = json.loads(entry)
+        except Exception as e:
+            print(e.args[0])
+            continue
+        else:
+            if entry_num == 1:
+                print(f"Chain started by: {colored(user_data['author'], 'yellow')}!\n")
+
+            qa_string = "Answer" if user_data["is_answer"] else "Question"
+            qa_string_color = "magenta" if user_data["is_answer"] else "yellow"
+            
+            # [Number] Question/Answer: Text content - Author
+            print(
+                f"{colored(f'[{entry_num}] {qa_string}: ',qa_string_color)} "+
+                f"{user_data['content']} {colored('- ' + user_data['author'], 'light_green')}"
+                )
+            entry_num+=1
+            
 
 def question_answer_input(is_answer):
     """
@@ -176,11 +209,10 @@ def get_unfinished_chain_end(get_answer):
         return None
 
 
-def append_data_to_chain(user_data, unfinished_chain_end):
+def append_data_to_chain(worksheet, user_data, unfinished_chain_end):
     """
-    Appends `user_data` to the row of `unfinished_chain_end` 
+    Appends `user_data` to the row of `unfinished_chain_end` in `worksheet`
     """
-    worksheet = SHEET.worksheet("unfinished_chains")
     row = unfinished_chain_end[1]
     column = unfinished_chain_end[2]
 
@@ -191,11 +223,10 @@ def append_data_to_chain(user_data, unfinished_chain_end):
         print("Question/Answer has already been answered")
 
 
-def create_new_chain(user_data):
+def create_new_chain(worksheet, user_data):
     """
     Creates new chain starting with provided UserData
     """
-    worksheet = SHEET.worksheet("unfinished_chains")
     worksheet.append_row([user_data.to_json()])
 
 
