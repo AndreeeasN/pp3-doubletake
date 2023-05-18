@@ -21,9 +21,9 @@ def main():
     Function called on startup, prints welcome message and offers options to play, view old chains or quit
     """
     print(
-        f"\n\nWelcome to {colored('[game name]','yellow')}, a python-based game of telephone!\n"+
-        f"In {colored('[game name]','yellow')} players will create chains of alternating questions and"+
-        f" answers\nwhile attempting to guess what the previous person asked, get creative and have fun!\n"
+        f"\n\nWelcome to {colored('[DoubleTake]','yellow')}, a python-based game of telephone!\n"+
+        f"In {colored('[DoubleTake]','yellow')} players will create chains of alternating questions and"+
+        f" answers\nwhile attempting to guess what the previous person asked. \nGet creative and have fun!\n"
         )
     
     print_menu_options(True)
