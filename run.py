@@ -296,9 +296,94 @@ def move_finished_chains():
 
 def open_chain_viewer():
     """
-    Opens the chain viewer where users can 
-    fetch finished chains by entering the finished chain IDs
+    Opens a menu where users can fetch finished chains by entering specific chain IDs
     """
+    print(f"\n\n{colored('[Fetching data...]', 'dark_grey')}\n\n")
+    worksheet = SHEET.worksheet("finished_chains")
+
+    # Gets the first entry of all finished chains
+    first_chain_entries = worksheet.col_values(1)
+    chain_len = len(first_chain_entries)
+    
+    # The amount of chains to preview at once, supports any positive integer
+    num_of_chains = 8
+    scroll_offset = 0
+    menu_string = None
+    temp_menu_string = f"Printed above are the {min(num_of_chains, chain_len)} latest finished chains!"
+
+    while True:
+        # Set start and end index of chains to print (Max set to 0 to prevent negative ints)
+        start_index = max(chain_len - num_of_chains - scroll_offset, 0)
+        end_index = chain_len - scroll_offset
+        
+        # Prints the last finished chains
+        for index, question in enumerate(first_chain_entries[start_index:end_index], start=start_index + 1):
+            # Check if the value is a valid JSON string
+            try:
+                user_data_dict = json.loads(question)
+            except Exception as e:
+                print(e.args[0])
+                continue
+            else:
+                # Prints chain index and first question
+                print(f"Chain {colored('#' + str(index),'yellow')}: {user_data_dict['content']}")
+
+        # If there's a temporarary menu string it'll be printed and then reset to default
+        if temp_menu_string:
+            menu_string = temp_menu_string
+            temp_menu_string = None
+        else:
+            menu_string = f"Viewing chains {colored('#'+ str(start_index + 1) +' to #'+ str(end_index),'yellow')}"
+
+        print(f"\n{menu_string}\n")
+        print_chain_viewer_options()
+
+        # Checks for a non-empty input, sets as lowercase and removes "#"
+        menu_input = input("\nInput: ").lower().replace("#","")
+
+        if menu_input.isalpha:
+            # u -> scroll up, d -> scroll down, q -> quit to menu
+            if menu_input == "u":
+                scroll_offset += num_of_chains
+                if scroll_offset > chain_len - num_of_chains:
+                    scroll_offset = chain_len - num_of_chains
+                    temp_menu_string = "Reached top of list!"
+            elif menu_input == "d":
+                scroll_offset -= num_of_chains
+                if scroll_offset < 0:
+                    scroll_offset = 0
+                    temp_menu_string = "Reached bottom of list!" 
+            elif menu_input == "q":
+                break
+
+            # If string is numeric, convert to int 
+            elif menu_input.isnumeric:
+                try:
+                    chain_id = int(menu_input)
+                except Exception as e:
+                    temp_menu_string = colored(e.args[0],"light_red")
+                    continue
+                else:
+                    # If chain_id is valid, print chain
+                    if chain_id >= 1 and chain_id <= chain_len:
+                        print_chain(worksheet.row_values(chain_id))
+                        input("\nPress enter to continue...\n")
+                    else:
+                        temp_menu_string = colored("Please enter a valid chain ID.","light_red")
+            else:
+                temp_menu_string = colored("Please enter a valid input.","light_red")
+    main()
+    
+
+def print_chain_viewer_options():
+    """
+    Prints all the chain viewer options, select chain ID, scroll up/down or quit to menu
+    """
+    print(
+        f"Enter a {colored('Chain #ID','light_green')} to {colored('View the chain','light_green')}\n"+
+        f"Type {colored('U or D','cyan')} to {colored('Scroll Up or Down','cyan')}\n"+
+        f"Type {colored('Q','light_red')} to {colored('Quit to main menu','light_red')}"
+        )
 
 
 class UserData:
