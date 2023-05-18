@@ -106,7 +106,8 @@ def open_post_game_menu(user_data_1, user_data_2, chain_question, chain_answer):
     
     # Prints the chains the user interacted with before they're altered or moved
     chain_1_values = worksheet.row_values(chain_question[1])
-    chain_2_values = worksheet.row_values(chain_answer[1])  
+    if chain_answer:
+        chain_2_values = worksheet.row_values(chain_answer[1])  
 
     print_chain(chain_1_values)
     print(
@@ -114,11 +115,16 @@ def open_post_game_menu(user_data_1, user_data_2, chain_question, chain_answer):
         f"{user_data_1.content} {colored('- ' + user_data_1.author, 'light_green')}"
         )
     
-    print_chain(chain_2_values)
+    # If user started a new chain, chain_answer will be empty
+    if chain_answer:
+        print_chain(chain_2_values)
+        print(
+            f"{colored(f'Your question: ', 'yellow')} "+
+            f"{user_data_2.content} {colored('- ' + user_data_2.author, 'light_green')}\n"
+            )
+        
     print(
-        f"{colored(f'Your question: ', 'yellow')} "+
-        f"{user_data_2.content} {colored('- ' + user_data_2.author, 'light_green')}\n"+
-        "You're all done! The chains you contributed to are shown above!\n"+
+        "\nYou're all done! The chains you contributed to are shown above!\n"+
         f"\n\n{colored('[Saving data...]', 'dark_grey')}\n\n"
         )
     
