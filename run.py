@@ -22,6 +22,13 @@ def main():
     options to play, view old chains or quit
     """
     print(
+    f"{colored('force_color 0','light_green', force_color=0)}\n" +
+    f"{colored('force_color 1','light_green', force_color=1)}\n" +
+    f"{colored('force_color 2','light_green', force_color=2)}\n" +
+    f"{colored('force_color 3','light_green', force_color=3)}\n" 
+    )
+        
+    print(
         f"\n\nWelcome to {colored('[DoubleTake]','yellow')}, a python-based " +
         "game of telephone!\n" +
         f"In {colored('[DoubleTake]','yellow')} players will create chains " +

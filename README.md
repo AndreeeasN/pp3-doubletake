@@ -42,7 +42,7 @@ In this game players will create chains of alternating questions and answers whi
   - As an example, questions and answers are consistently yellow/magenta throughout the game, while signatures always appear in cyan
   ![DoubleTake Colors](assets/images/doubletake-colors.png)
 
-- As interacting with the spreadsheet through Google API may take a few seconds, subtle loading messages have been implemented to provide the user with some feedback while the application is working. 
+- As interacting with the spreadsheet through Google API may take a few seconds, subtle loading messages have been implemented to provide the user with some level of feedback while the application is working. 
 
 # Flowchart
 ![DoubleTake Lucid Flowchart](assets/images/doubletake-lucidchart.png)
@@ -50,7 +50,7 @@ In this game players will create chains of alternating questions and answers whi
 # Features
 
 ## Main Menu
-
+- The main menu features a quick introductory blurb and instructions on how to play the game
 ## The Game
 
 ## Chain Viewer
