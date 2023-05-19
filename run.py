@@ -21,7 +21,14 @@ def main():
     Function called on startup, prints welcome message and offers
     options to play, view old chains or quit
     """
+    # Prints title ascii-art and introduction
     print(
+        " _____              _     _   _______    _\n" +
+        "|  __ \\            | |   | | |__   __|  | |\n" +
+        "| |  | | ___  _   _| |__ | | ___| | __ _| | _____\n" +
+        "| |  | |/ _ \\| | | | '_ \\| |/ _ \\ |/ _` | |/ / _ \\\n" +
+        "| |__| | (_) | |_| | |_) | |  __/ | (_| |   <  __/\n" +
+        "|_____/ \\___/ \\__,_|_.__/|_|\\___|_|\\__,_|_|\\_\\___|\n" +
         f"\n\nWelcome to {colored('[DoubleTake]','yellow')}, a python-based " +
         "game of telephone!\n" +
         f"In {colored('[DoubleTake]','yellow')} players will create chains " +

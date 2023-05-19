@@ -50,10 +50,33 @@ In this game players will create chains of alternating questions and answers whi
 # Features
 
 ## Main Menu
+The main menu features the title of the game and a quick introduction on what the game is about 
 
-## The Game
+  ![DoubleTake Main Menu](assets/images/doubletake-menu.png)
+- From the main menu the user has 3 options:
+  - *1* - Starts the game
+  - *2* - Opens the chain viewer
+  - *3* - Exits the application
+
+## DoubleTake - The Game
+The game is heavily inspired by the classic game of telephone, where a word is whispered between several people to the point where the original sentence is completely lost in translation.
+
+![DoubleTake Game](assets/images/doubletake-colors.png)
+
+The user will be asked to answer a player-provided question, to later try to guess the question of a player-provided answer.
+The user may also include a signature of their choosing to keep track of their previous questions/answers, if no signature is provided it will default to "Anonymous".
+Once finished answering the player will be provided with a post-game menu where all previous entries are shown
+
+![DoubleTake Post-Game](assets/images/doubletake-post-game.png)
+
+This back-and-forth between players will continue until a chain of questions and answers is 8 entries long and marked as "Finished", it may then be viewed through the [Chain Viewer](#chain-viewer "Chain Viewer")
+
 
 ## Chain Viewer
+The chain viewer can be reached from the main menu, this is where all finished chains can be viewed by entering it's respective chain #ID.
+The bottom of the list featuring the latest 8 chains will always be on display first, when the list of finished chains exceeds 8 the user may scroll up and down by inputting U or D.
+
+![DoubleTake Chain Viewer](assets/images/doubletake-chain-viewer.png)
 
 # Development
 
