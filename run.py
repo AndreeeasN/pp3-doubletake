@@ -77,7 +77,7 @@ def start_game():
     # First question
     if unfinished_chain_question:
         # Prints question/answer for user to answer
-        print(f"It's your turn to {colored('answer a question!','yellow')}\n")
+        print(f"It's your turn to {colored('answer a question!','magenta')}\n")
         print(
             f"{colored(f'Question: ','yellow')} " +
             f"{unfinished_chain_question[0].content}"
@@ -94,7 +94,7 @@ def start_game():
         # Prints question/answer for user to answer
         print(
             "It's your turn to " +
-            f"{colored('guess the question!','magenta')}\n"
+            f"{colored('guess the question!','yellow')}\n"
         )
         print(
             f"{colored(f'Answer: ','magenta')} " +
@@ -141,7 +141,7 @@ def open_post_game_menu(
     print(
         f"{colored(f'Your answer: ', 'magenta')} " +
         f"{user_data_1.content} " +
-        f"{colored('- ' + user_data_1.author, 'light_green')}"
+        f"{colored('- ' + user_data_1.author, 'cyan')}"
         )
 
     # If user started a new chain, chain_answer will be empty
@@ -150,7 +150,7 @@ def open_post_game_menu(
         print(
             f"{colored(f'Your question: ', 'yellow')} " +
             f"{user_data_2.content} " +
-            f"{colored('- ' + user_data_2.author, 'light_green')}\n"
+            f"{colored('- ' + user_data_2.author, 'cyan')}\n"
             )
 
     print(
@@ -193,7 +193,7 @@ def print_chain(chain):
             if entry_num == 1:
                 print(
                     f"Chain started by: " +
-                    f"{colored(user_data['author'], 'light_green')}!\n")
+                    f"{colored(user_data['author'], 'cyan')}!\n")
 
             qa_string = "Answer" if user_data["is_answer"] else "Question"
             qa_string_color = "magenta" if user_data["is_answer"] else "yellow"
@@ -202,7 +202,7 @@ def print_chain(chain):
             print(
                 f"{colored(f'[{entry_num}] {qa_string}: ',qa_string_color)} " +
                 f"{user_data['content']} " +
-                f"{colored('- ' + user_data['author'], 'light_green')}"
+                f"{colored('- ' + user_data['author'], 'cyan')}"
                 )
             entry_num += 1
 
