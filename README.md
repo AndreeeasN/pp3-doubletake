@@ -1,14 +1,71 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Memento - Visual Memory Test
 
-Welcome,
+[DoubleTake](https://doubletake.herokuapp.com/) was developed for anyone who enjoys a twist on the traditional telephone game.
+In this game players will create chains of alternating questions and answers while attempting to unravel what previous players have been saying.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+# Table of Contents
++ [UX](#ux "UX")
+  + [User Stories](#user-stories "User Stories")
+  + [Design](#design "Design")
++ [Flowchart](#flowchart "Flowchart")
++ [Features](#features "Features")
+  + [Main Menu](#main-menu "Main Menu")
+  + [The Game](#the-game "The Game")
+  + [Chain Viewer](#chain-viewer "Chain Viewer")
++ [Development](#development "Development")
+  + [Heroku Deployment](#heroku-deployment "Heroku Deployment")
++ [Testing](#Testing "Testing")
+  + [General Testing](#general-testing "General Testing")
+  + [Validator Testing](#validator-testing "Validator Testing")
+  + [Bugs Encountered](#bugs-encountered "Bugs Encountered")
++ [Credits](#credits "Credits")
 
-## Reminders
+# UX
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+## User stories
+
+### First Time Visitor Goals
+
+1. As a First Time Visitor, 
+
+### Returning Visitor Goals
+
+1. As a Returning Visitor, 
+
+### Frequent User Goals
+
+1. As a Frequent User,
+
+## Design
+- Colors
+- Loading Text
+
+# Flowchart
+![DoubleTake Lucid Flowchart]()
+
+# Features
+
+## Main Menu
+
+## The Game
+
+## Chain Viewer
+
+# Development
+
+## Heroku Deployment
+The project was deployed as a Heroku App (Link [here](https://doubletake.herokuapp.com/)) using the following steps:
+  1. 
+
+# Testing
+
+## Validator Testing
+
+## Bugs Encountered
+
+# Credits
+Resources and tutorials used for developing this project:
+-
 
 ## Creating the Heroku app
 
@@ -22,11 +79,3 @@ You must then create a _Config Var_ called `PORT`. Set this to `8000`
 If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
 
 Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
----
-
-Happy coding!
