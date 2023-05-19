@@ -419,13 +419,14 @@ def open_chain_viewer():
                     temp_menu_string = "Reached bottom of list!"
             elif menu_input == "q":
                 break
-
-            # If string is numeric, convert to int
-            elif menu_input.isnumeric:
+            # Check if input can be converted to integer
+            else:
                 try:
                     chain_id = int(menu_input)
-                except Exception as e:
-                    temp_menu_string = colored(e.args[0], "light_red")
+                except ValueError:
+                    temp_menu_string = colored(
+                        "Please enter a valid input.", "light_red"
+                        )
                     continue
                 else:
                     # If chain_id is valid, print chain
@@ -436,10 +437,7 @@ def open_chain_viewer():
                         temp_menu_string = colored(
                             "Please enter a valid chain ID.", "light_red"
                             )
-            else:
-                temp_menu_string = colored(
-                    "Please enter a valid input.", "light_red"
-                    )
+            
     main()
 
 
