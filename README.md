@@ -1,6 +1,7 @@
-# Memento - Visual Memory Test
+# DoubleTake - A Python-based game of telephone
 
 [DoubleTake](https://doubletake.herokuapp.com/) was developed for anyone who enjoys a twist on traditional telephone games.
+
 In this game players will create chains of alternating questions and answers while attempting to unravel what previous players have said, often with unpredictable results.
 
 # Table of Contents
@@ -37,11 +38,14 @@ In this game players will create chains of alternating questions and answers whi
 - As a returning visitor, I want to see if any new chains have been finished
 
 ## Design
-- For the sake of leading
-- Loading Text
+- Certain words and phrases are colored to guide the user's eyes and make interaction more intuitive
+  - As an example, questions and answers are consistently yellow/magenta throughout the game, while signatures always appear in cyan
+  ![DoubleTake Colors](assets/images/doubletake-colors.png)
+
+- As interacting with the spreadsheet through Google API may take a few seconds, subtle loading messages have been implemented to provide the user with some feedback while the application is working. 
 
 # Flowchart
-![DoubleTake Lucid Flowchart]()
+![DoubleTake Lucid Flowchart](assets/images/doubletake-lucidchart.png)
 
 # Features
 
