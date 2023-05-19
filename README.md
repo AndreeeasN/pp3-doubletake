@@ -129,6 +129,8 @@ The project was deployed using Code Institute's mock terminal through Heroku (Li
   - Google API - row_count returns the default max amount of rows in the spreadsheet rather than the rows with data, this was solved by simply exiting the loop on a row where no data is encountered
 - [RESOLVED] During Heroku deployment - ERROR: No matching distribution found for pywin32==306, Push rejected, failed to compile Python app.
   - This was due to requirements.txt including requirements from my global python interpreter, this was resolved by creating a new venv (virtual environment) and rebuilding the requirements file from there
+- [RESOLVED] In the chain viewer, if the user tried scrolling up to the top of the list the chain #ID showing didn't match up
+  - This was caused by the start_index going into the negatives rather than stopping, this was resolved by using max(start value, 0) to keep the value from ever going below 0
 - After deployment to Heroku, Code Institute's mock terminal appears to have a different color scheme, appearing drastically darker than that specified in the code. This has yet to be resolved.
 
 # Credits
