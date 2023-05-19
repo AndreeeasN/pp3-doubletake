@@ -27,17 +27,12 @@ In this game players will create chains of alternating questions and answers whi
 
 ## User stories
 
-### First Time Visitor Goals
-
-- As a first time visitor, I want to enjoy a simple text-based multiplayer game
-- As a first time visitor, I want to quickly grasp how to play the game
-- As a first time visitor, I want to see what came before my contribution after finishing a round
-
-### Returning Visitor Goals
-
-- As a returning visitor, I want to look at finished chains to see what my past contributions led up to
-- As a returning visitor, I want to easily navigate through menus with minimal effort 
-- As a returning visitor, I want to see if any new chains have been finished
+- As a user, I want to:
+  - Easily navigate through menus with minimal effort
+  - Receive clear visual feedback when entering inputs 
+  - See what came before my answer after finishing a round
+  - Look at finished chains to see what my past contributions led up to
+  - See if any new chains have been finished since last time I played
 
 ## Design
 - Certain words and phrases are colored to guide the user's eyes and make interaction more intuitive
