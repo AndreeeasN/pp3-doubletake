@@ -50,7 +50,7 @@ In this game players will create chains of alternating questions and answers whi
 # Features
 
 ## Main Menu
-- The main menu features a quick introductory blurb and instructions on how to play the game
+
 ## The Game
 
 ## Chain Viewer
