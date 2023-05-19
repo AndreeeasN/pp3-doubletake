@@ -437,7 +437,7 @@ def open_chain_viewer():
                         temp_menu_string = colored(
                             "Please enter a valid chain ID.", "light_red"
                             )
-            
+
     main()
 
 
