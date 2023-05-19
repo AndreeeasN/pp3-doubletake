@@ -442,8 +442,8 @@ def print_chain_viewer_options():
     scroll up/down or quit to main menu
     """
     print(
-        f"Enter a {colored('Chain #ID','light_green')} to " +
-        f"{colored('View the chain','light_green')}\n" +
+        f"Enter a {colored('Chain #ID','yellow')} to " +
+        f"{colored('View the chain','yellow')}\n" +
         f"Type {colored('U or D','cyan')} to " +
         f"{colored('Scroll Up or Down','cyan')}\n" +
         f"Type {colored('Q','light_red')} to " +

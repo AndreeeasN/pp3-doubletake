@@ -26,18 +26,18 @@ In this game players will create chains of alternating questions and answers whi
 
 ### First Time Visitor Goals
 
-1. As a First Time Visitor, 
+- As a first time visitor, I want to enjoy a simple text-based multiplayer game
+- As a first time visitor, I want to quickly grasp how to play the game
+- As a first time visitor, I want to see what came before my contribution after finishing a round
 
 ### Returning Visitor Goals
 
-1. As a Returning Visitor, 
-
-### Frequent User Goals
-
-1. As a Frequent User,
+- As a returning visitor, I want to look at finished chains to see what my past contributions led up to
+- As a returning visitor, I want to easily navigate through menus with minimal effort 
+- As a returning visitor, I want to see if any new chains have been finished
 
 ## Design
-- Colors
+- For the sake of leading
 - Loading Text
 
 # Flowchart
