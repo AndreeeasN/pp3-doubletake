@@ -57,7 +57,9 @@ def print_menu_options(first_time_startup):
         if menu_input in ("1", "2", "3"):
             break
         else:
-            print("Invalid input, please try again")
+            print(colored(
+                        "Please enter a valid input.", "light_red"
+                        ))
 
     # 1 -> play game, 2 -> view old chains, 3 -> exit
     if menu_input == "1":
