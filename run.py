@@ -18,14 +18,17 @@ SHEET = GSPREAD_CLIENT.open("PP3_sheet")
 
 def main():
     """
-    Function called on startup, prints welcome message and offers options to play, view old chains or quit
+    Function called on startup, prints welcome message and offers
+    options to play, view old chains or quit
     """
     print(
-        f"\n\nWelcome to {colored('[DoubleTake]','yellow')}, a python-based game of telephone!\n"+
-        f"In {colored('[DoubleTake]','yellow')} players will create chains of alternating questions and"+
-        f" answers\nwhile attempting to guess what the previous person asked. \nGet creative and have fun!\n"
+        f"\n\nWelcome to {colored('[DoubleTake]','yellow')}, a python-based " +
+        "game of telephone!\n" +
+        f"In {colored('[DoubleTake]','yellow')} players will create chains " +
+        "of alternating questions and \nanswers while attempting to " +
+        "guess what the previous person asked. \nGet creative and have fun!\n"
         )
-    
+
     print_menu_options(True)
 
 
@@ -33,15 +36,18 @@ def print_menu_options(first_time_startup):
     play_string = "Start playing" if first_time_startup else "Play again"
 
     print(
-        f"Type {colored('1','light_green')} to {colored(play_string,'light_green')}\n"+
-        f"Type {colored('2','cyan')} to {colored('View finished chains','cyan')}\n"+
-        f"Type {colored('3','light_red')} to {colored('Quit the application','light_red')}"
+        f"Type {colored('1','light_green')} to " +
+        f"{colored(play_string,'light_green')}\n" +
+        f"Type {colored('2','cyan')} to " +
+        f"{colored('View finished chains','cyan')}\n" +
+        f"Type {colored('3','light_red')} to " +
+        f"{colored('Quit the application','light_red')}"
         )
-    
+
     # Checks for a non-empty input
     while True:
         menu_input = input("\nInput: ")
-        if menu_input in ("1","2","3"):
+        if menu_input in ("1", "2", "3"):
             break
         else:
             print("Invalid input, please try again")
@@ -58,8 +64,9 @@ def print_menu_options(first_time_startup):
 
 def start_game():
     """
-    Function that starts the game, looks for unfinished chains and if there's one
-    available provide user with a question / answer to guess, otherwise start new chain
+    Function that starts the game, looks for unfinished chains
+    and if there's one available provide user with a question / answer,
+    otherwise start new chain
     """
     # Gets the last question of a random unfinished chain
     unfinished_chain_question = get_unfinished_chain_end(False)
@@ -67,71 +74,94 @@ def start_game():
     # Declares first and second question for later use
     user_data_1 = user_data_2 = None
 
-    # First question, if there's a chain to answer proceed normally otherwise start new chain
+    # First question
     if unfinished_chain_question:
         # Prints question/answer for user to answer
         print(f"It's your turn to {colored('answer a question!','yellow')}\n")
-        print(f"{colored(f'Question: ','yellow')} {unfinished_chain_question[0].content}")
-        
+        print(
+            f"{colored(f'Question: ','yellow')} " +
+            f"{unfinished_chain_question[0].content}"
+            )
+
         # Creates UserData object based on player input
         user_data_1 = question_answer_input(True)
-    
+
     # Gets the last answer of a random unfinished chain
     unfinished_chain_answer = get_unfinished_chain_end(True)
 
-    # Second question, will always be guessing the question
+    # Second question, if there is none let user create new chain
     if unfinished_chain_answer:
         # Prints question/answer for user to answer
-        print(f"It's your turn to {colored('guess the question!','magenta')}\n")
-        print(f"{colored(f'Answer: ','magenta')} {unfinished_chain_answer[0].content}")
-        
+        print(
+            "It's your turn to " +
+            f"{colored('guess the question!','magenta')}\n"
+        )
+        print(
+            f"{colored(f'Answer: ','magenta')} " +
+            f"{unfinished_chain_answer[0].content}"
+            )
+
         # Creates UserData object based on player input
         user_data_2 = question_answer_input(False)
     else:
-        print(f"You get to start a new chain! {colored('Ask a question!','magenta')}\n\n")
-        
+        print(
+            "You get to start a new chain! " +
+            f"{colored('Ask a question!','magenta')}\n\n"
+            )
+
         # Creates UserData object based on player input
         user_data_2 = question_answer_input(False)
-    
+
     # Opens the post game menu
-    open_post_game_menu(user_data_1, user_data_2, unfinished_chain_question, unfinished_chain_answer)
+    open_post_game_menu(
+        user_data_1,
+        user_data_2,
+        unfinished_chain_question,
+        unfinished_chain_answer
+        )
 
 
-def open_post_game_menu(user_data_1, user_data_2, chain_question, chain_answer):
+def open_post_game_menu(
+        user_data_1,
+        user_data_2,
+        chain_question,
+        chain_answer):
     """
-    Opens the post-game menu, prints the chains the user has answered and appends
-    their answers to their respective chains.
+    Opens the post-game menu, prints the chains the user has answered
+    and appends their answers to their respective chains.
     """
     worksheet = SHEET.worksheet("unfinished_chains")
-    
-    # Prints the chains the user interacted with before they're altered or moved
+
+    # Prints chains the user interacted with before they're altered or moved
     chain_1_values = worksheet.row_values(chain_question[1])
     if chain_answer:
-        chain_2_values = worksheet.row_values(chain_answer[1])  
+        chain_2_values = worksheet.row_values(chain_answer[1])
 
     print_chain(chain_1_values)
     print(
-        f"{colored(f'Your answer: ', 'magenta')} "+
-        f"{user_data_1.content} {colored('- ' + user_data_1.author, 'light_green')}"
+        f"{colored(f'Your answer: ', 'magenta')} " +
+        f"{user_data_1.content} " +
+        f"{colored('- ' + user_data_1.author, 'light_green')}"
         )
-    
+
     # If user started a new chain, chain_answer will be empty
     if chain_answer:
         print_chain(chain_2_values)
         print(
-            f"{colored(f'Your question: ', 'yellow')} "+
-            f"{user_data_2.content} {colored('- ' + user_data_2.author, 'light_green')}\n"
+            f"{colored(f'Your question: ', 'yellow')} " +
+            f"{user_data_2.content} " +
+            f"{colored('- ' + user_data_2.author, 'light_green')}\n"
             )
-        
+
     print(
-        "\nYou're all done! The chains you contributed to are shown above!\n"+
+        "\nYou're all done! The chains you contributed to are shown above!\n" +
         f"\n\n{colored('[Saving data...]', 'dark_grey')}\n\n"
         )
-    
+
     # Appends user answer to chain
     if chain_question:
         append_data_to_chain(worksheet, user_data_1, chain_question)
-    
+
     # Appends question to chain, start new chain if assigned none
     if chain_answer:
         append_data_to_chain(worksheet, user_data_2, chain_answer)
@@ -140,7 +170,7 @@ def open_post_game_menu(user_data_1, user_data_2, chain_question, chain_answer):
 
     # Move all chains with 8 entries or more to finished worksheet
     move_finished_chains()
-    
+
     # Print options to play again, view finished chains or quit
     print_menu_options(False)
 
@@ -149,11 +179,11 @@ def print_chain(chain):
     """
     Prints all questions/answers and authors in a chain
     """
-    print(colored(f'\n\n[Printing chain...]\n\n','dark_grey'))
+    print(colored(f'\n\n[Printing chain...]\n\n', 'dark_grey'))
     entry_num = 1
-    
+
     for entry in chain:
-        # Tries loading json-string and if succesful prints question/answer + author
+        # Tries loading json-string, if succesful prints entry + author
         try:
             user_data = json.loads(entry)
         except Exception as e:
@@ -161,51 +191,59 @@ def print_chain(chain):
             continue
         else:
             if entry_num == 1:
-                print(f"Chain started by: {colored(user_data['author'], 'light_green')}!\n")
+                print(
+                    f"Chain started by: " +
+                    f"{colored(user_data['author'], 'light_green')}!\n")
 
             qa_string = "Answer" if user_data["is_answer"] else "Question"
             qa_string_color = "magenta" if user_data["is_answer"] else "yellow"
-            
+
             # [Number] Question/Answer: Text content - Author
             print(
-                f"{colored(f'[{entry_num}] {qa_string}: ',qa_string_color)} "+
-                f"{user_data['content']} {colored('- ' + user_data['author'], 'light_green')}"
+                f"{colored(f'[{entry_num}] {qa_string}: ',qa_string_color)} " +
+                f"{user_data['content']} " +
+                f"{colored('- ' + user_data['author'], 'light_green')}"
                 )
-            entry_num+=1
-            
+            entry_num += 1
+
 
 def question_answer_input(is_answer):
     """
-    Function that awaits player input and returns UserData object. 
-    
+    Function that awaits player input and returns UserData object.
+
     `is_answer` decides if the user is inputting answer or question
     """
-    #Sets string and color to be printed before user input
+    # Sets string and color to be printed before user input
     qa_string_input = "Answer" if is_answer else "Question"
     qa_string_color = "magenta" if is_answer else "yellow"
     while True:
         # Checks for non-empty input, loops while empty
-        user_answer = input(colored(f'{qa_string_input}: ',qa_string_color))
+        user_answer = input(colored(f'{qa_string_input}: ', qa_string_color))
         if user_answer:
-            # Allows user to input signature, defaults to "Anonymous" if left blank
+            # Allows user to input signature, defaults to "Anonymous" if blank
             print(f"\nAdd signature? (Leave blank to stay anonymous)")
             user_signature = input(colored('Signature: ', 'cyan'))
-            if not user_signature: 
+            if not user_signature:
                 user_signature = "Anonymous"
 
             # Returns new userData object based on user input
             return UserData(user_answer, user_signature, is_answer)
         else:
-            print(colored(f"Please enter a valid {qa_string_input.lower()}.","light_red"))
+            print(
+                colored(
+                    "Please enter a valid " +
+                    f"{qa_string_input.lower()}.", "light_red"
+                    )
+                )
 
 
 def get_unfinished_chain_end(get_answer):
     """
-    Returns last entry of a random unfinished chain as [UserData, row, column] 
+    Returns last entry of a random unfinished chain as [UserData, row, column]
 
     `get_answer` decides if an answer or question should be fetched.
     """
-    print(colored(f'\n\n[Fetching data...]\n\n','dark_grey'))
+    print(colored(f'\n\n[Fetching data...]\n\n', 'dark_grey'))
     # The worksheet containing all unfinished chains
     worksheet = SHEET.worksheet("unfinished_chains")
 
@@ -216,7 +254,7 @@ def get_unfinished_chain_end(get_answer):
     for row in range(1, worksheet.row_count + 1):
         # Get the values of the current row
         row_values = worksheet.row_values(row)
-        
+
         # If the row is empty, exit loop
         if not row_values:
             break
@@ -233,8 +271,8 @@ def get_unfinished_chain_end(get_answer):
         else:
             # Create a UserData object from the fetched JSON string
             user_data = UserData(
-                user_data_dict["content"], 
-                user_data_dict["author"], 
+                user_data_dict["content"],
+                user_data_dict["author"],
                 user_data_dict["is_answer"]
             )
 
@@ -246,7 +284,7 @@ def get_unfinished_chain_end(get_answer):
     # This will cause player to start new chain instead
     if get_answer and len(chain_end_list) < 4:
         return None
-        
+
     # if chain_end_list has viable entries, return a random one
     if chain_end_list:
         return random.choice(chain_end_list)
@@ -277,19 +315,20 @@ def create_new_chain(worksheet, user_data):
 
 def move_finished_chains():
     """
-    Find all chains with 8 entries or more and move them to the page of finished chains 
+    Find all chains with 8 entries or more and
+    move them to the page of finished chains
     """
     unfinished_worksheet = SHEET.worksheet("unfinished_chains")
     finished_worksheet = SHEET.worksheet("finished_chains")
 
-    # Iterate over each row in unfinished worksheet (Starts at 1, default length is 999)
+    # Iterate over each row in worksheet (Starts at 1, default length is 999)
     i = 1
     while i < unfinished_worksheet.row_count + 1:
         # Get the values of the current row
         row_values = unfinished_worksheet.row_values(i)
-        
+
         # If row is empty, break
-        if not row_values: 
+        if not row_values:
             break
 
         # If the row has 8 entries or more, move to finished worksheet
@@ -302,7 +341,8 @@ def move_finished_chains():
 
 def open_chain_viewer():
     """
-    Opens a menu where users can fetch finished chains by entering specific chain IDs
+    Opens a menu where users can fetch
+    finished chains by entering specific chain IDs
     """
     print(f"\n\n{colored('[Fetching data...]', 'dark_grey')}\n\n")
     worksheet = SHEET.worksheet("finished_chains")
@@ -310,20 +350,25 @@ def open_chain_viewer():
     # Gets the first entry of all finished chains
     first_chain_entries = worksheet.col_values(1)
     chain_len = len(first_chain_entries)
-    
+
     # The amount of chains to preview at once, supports any positive integer
     num_of_chains = 8
     scroll_offset = 0
     menu_string = None
-    temp_menu_string = f"Printed above are the {min(num_of_chains, chain_len)} latest finished chains!"
+    temp_menu_string = (
+        "Printed above are the " +
+        f"{min(num_of_chains, chain_len)} latest finished chains!"
+        )
 
     while True:
-        # Set start and end index of chains to print (Max set to 0 to prevent negative ints)
+        # Set start and end index to print (Max 0 to prevent negative ints)
         start_index = max(chain_len - num_of_chains - scroll_offset, 0)
         end_index = chain_len - scroll_offset
-        
+
         # Prints the last finished chains
-        for index, question in enumerate(first_chain_entries[start_index:end_index], start=start_index + 1):
+        for index, question in enumerate(
+                first_chain_entries[start_index:end_index],
+                start=start_index + 1):
             # Check if the value is a valid JSON string
             try:
                 user_data_dict = json.loads(question)
@@ -332,20 +377,26 @@ def open_chain_viewer():
                 continue
             else:
                 # Prints chain index and first question
-                print(f"Chain {colored('#' + str(index),'yellow')}: {user_data_dict['content']}")
+                print(
+                    f"Chain {colored('#' + str(index),'yellow')}: " +
+                    f"{user_data_dict['content']}"
+                )
 
-        # If there's a temporarary menu string it'll be printed and then reset to default
+        # If there's a temporarary string, print and reset string to default
         if temp_menu_string:
             menu_string = temp_menu_string
             temp_menu_string = None
         else:
-            menu_string = f"Viewing chains {colored('#'+ str(start_index + 1) +' to #'+ str(end_index),'yellow')}"
+            menu_string = (
+                "Viewing chains " +
+                f"{colored('#'+ str(start_index + 1), 'yellow')} " +
+                f"to {colored('#'+ str(end_index), 'yellow')}")
 
         print(f"\n{menu_string}\n")
         print_chain_viewer_options()
 
         # Checks for a non-empty input, sets as lowercase and removes "#"
-        menu_input = input("\nInput: ").lower().replace("#","")
+        menu_input = input("\nInput: ").lower().replace("#", "")
 
         if menu_input.isalpha:
             # u -> scroll up, d -> scroll down, q -> quit to menu
@@ -358,16 +409,16 @@ def open_chain_viewer():
                 scroll_offset -= num_of_chains
                 if scroll_offset < 0:
                     scroll_offset = 0
-                    temp_menu_string = "Reached bottom of list!" 
+                    temp_menu_string = "Reached bottom of list!"
             elif menu_input == "q":
                 break
 
-            # If string is numeric, convert to int 
+            # If string is numeric, convert to int
             elif menu_input.isnumeric:
                 try:
                     chain_id = int(menu_input)
                 except Exception as e:
-                    temp_menu_string = colored(e.args[0],"light_red")
+                    temp_menu_string = colored(e.args[0], "light_red")
                     continue
                 else:
                     # If chain_id is valid, print chain
@@ -375,27 +426,35 @@ def open_chain_viewer():
                         print_chain(worksheet.row_values(chain_id))
                         input("\nPress enter to continue...\n")
                     else:
-                        temp_menu_string = colored("Please enter a valid chain ID.","light_red")
+                        temp_menu_string = colored(
+                            "Please enter a valid chain ID.", "light_red"
+                            )
             else:
-                temp_menu_string = colored("Please enter a valid input.","light_red")
+                temp_menu_string = colored(
+                    "Please enter a valid input.", "light_red"
+                    )
     main()
-    
+
 
 def print_chain_viewer_options():
     """
-    Prints all the chain viewer options, select chain ID, scroll up/down or quit to menu
+    Prints all the chain viewer options, select chain ID,
+    scroll up/down or quit to main menu
     """
     print(
-        f"Enter a {colored('Chain #ID','light_green')} to {colored('View the chain','light_green')}\n"+
-        f"Type {colored('U or D','cyan')} to {colored('Scroll Up or Down','cyan')}\n"+
-        f"Type {colored('Q','light_red')} to {colored('Quit to main menu','light_red')}"
+        f"Enter a {colored('Chain #ID','light_green')} to " +
+        f"{colored('View the chain','light_green')}\n" +
+        f"Type {colored('U or D','cyan')} to " +
+        f"{colored('Scroll Up or Down','cyan')}\n" +
+        f"Type {colored('Q','light_red')} to " +
+        f"{colored('Quit to main menu','light_red')}"
         )
 
 
 class UserData:
     """
-    The data that will be submitted to our spreadsheet, contains the string content,
-    author and bool if it's a question or answer
+    The data that will be submitted to our spreadsheet,
+    contains the string content, author and bool if it's a question or answer
     """
     def __init__(self, content, author, is_answer):
         self.content = content

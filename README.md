@@ -1,7 +1,7 @@
 # Memento - Visual Memory Test
 
-[DoubleTake](https://doubletake.herokuapp.com/) was developed for anyone who enjoys a twist on the traditional telephone game.
-In this game players will create chains of alternating questions and answers while attempting to unravel what previous players have been saying.
+[DoubleTake](https://doubletake.herokuapp.com/) was developed for anyone who enjoys a twist on traditional telephone games.
+In this game players will create chains of alternating questions and answers while attempting to unravel what previous players have said, often with unpredictable results.
 
 # Table of Contents
 + [UX](#ux "UX")
