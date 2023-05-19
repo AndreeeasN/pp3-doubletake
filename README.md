@@ -9,7 +9,7 @@ In this game players will create chains of alternating questions and answers whi
   + [User Stories](#user-stories "User Stories")
   + [Design](#design "Design")
 + [Flowchart](#flowchart "Flowchart")
-+ [Data Storage](#data-storage "Data Storage)
++ [Data Storage](#data-storage "Data Storage")
 + [Features](#features "Features")
   + [Main Menu](#main-menu "Main Menu")
   + [The Game](#the-game "The Game")
@@ -51,8 +51,8 @@ In this game players will create chains of alternating questions and answers whi
 
 # Data Storage
 Due to the nature of the game it required storing several simultaneous chains of questions/answers.<br> 
-I've opted to convert the User Data object being submitted to a JSON-formatted string which is then stored on a Google spreadsheet (can be viewed [here](https://docs.google.com/spreadsheets/d/1li_zDS9HltKV1cMbvn3x_Py7OmcUwD0XyyHjK1YEbKM/edit#gid=0))<br>
-While reducing legibility should we wish to alter the data directly, this allows us to increase the amount of simultaneous chains with ease should we wish to expand.
+I've opted to convert the User Data objects being submitted to a JSON-formatted string which is then stored on a Google spreadsheet (can be viewed [here](https://docs.google.com/spreadsheets/d/1li_zDS9HltKV1cMbvn3x_Py7OmcUwD0XyyHjK1YEbKM/edit#gid=0))<br>
+While reducing legibility if we wish to alter the data directly, this allows us to increase the amount of simultaneous chains with ease should we wish to expand.
 
 Upon a chain reaching completion it is moved from the "unfinished_chains" worksheet to the "finished_chains" one.
 
@@ -132,8 +132,14 @@ The project was deployed using Code Institute's mock terminal through Heroku (Li
 - After deployment to Heroku, Code Institute's mock terminal appears to have a different color scheme, appearing drastically darker than that specified in the code. This has yet to be resolved.
 
 # Credits
+Libraries and modules used in this project:
+- JSON - Used to format UserData objects into strings to be stored
+- random - Used to randomly select a question/answer for the user
+- [termcolor](https://pypi.org/project/termcolor/) - Used to give our text color
+- [gspread](https://pypi.org/project/gspread/) - Google sheets API, used for getting data from our spreadsheet
+- google.oauth2.service_account - Used to verify application as a service account for connecting to google services
+
 Resources and tutorials used for developing this project:
-- 
 - [How to extract the last x elements from a list - StackOverflow](https://stackoverflow.com/questions/8556076/python-how-to-extract-the-last-x-elements-from-a-list)
 - [Accessing the index in 'for' loops - StackOverflow](https://stackoverflow.com/questions/522563/accessing-the-index-in-for-loops)
 - [Text to ASCII Art generator](https://patorjk.com/software/taag/) by [Patrick Gillespie](https://github.com/patorjk)
