@@ -353,7 +353,7 @@ def open_chain_viewer():
     Opens a menu where users can fetch
     finished chains by entering specific chain IDs
     """
-    print(f"\n\n{colored('[Fetching data...]', 'dark_grey')}\n\n")
+    print(f"\n\n{colored('[Fetching data...]', 'dark_grey')}")
     worksheet = SHEET.worksheet("finished_chains")
 
     # Gets the first entry of all finished chains
@@ -364,45 +364,18 @@ def open_chain_viewer():
     num_of_chains = 8
     scroll_offset = 0
     menu_string = None
-    temp_menu_string = (
-        "Printed above are the " +
-        f"{min(num_of_chains, chain_len)} latest finished chains!"
-        )
 
     while True:
         # Set start and end index to print (Max 0 to prevent negative ints)
         start_index = max(chain_len - num_of_chains - scroll_offset, 0)
         end_index = chain_len - scroll_offset
 
-        # Prints the last finished chains
-        for index, question in enumerate(
-                first_chain_entries[start_index:end_index],
-                start=start_index + 1):
-            # Check if the value is a valid JSON string
-            try:
-                user_data_dict = json.loads(question)
-            except Exception as e:
-                print(e.args[0])
-                continue
-            else:
-                # Prints chain index and first question
-                print(
-                    f"Chain {colored('#' + str(index),'yellow')}: " +
-                    f"{user_data_dict['content']}"
-                )
-
-        # If there's a temporarary string, print and reset string to default
-        if temp_menu_string:
-            menu_string = temp_menu_string
-            temp_menu_string = None
-        else:
-            menu_string = (
-                "Viewing chains " +
-                f"{colored('#'+ str(start_index + 1), 'yellow')} " +
-                f"to {colored('#'+ str(end_index), 'yellow')}")
-
-        print(f"\n{menu_string}\n")
+        # Prints a numbered list of all chains, menu_string and user options
+        print_list_of_chains(first_chain_entries, start_index, end_index)
+        print_chain_viewer_menu_string(menu_string, start_index, end_index)
         print_chain_viewer_options()
+        # Resets menu string
+        menu_string = None
 
         # Checks for a non-empty input, sets as lowercase and removes "#"
         menu_input = input("\nInput: ").lower().replace("#", "")
@@ -413,12 +386,12 @@ def open_chain_viewer():
                 scroll_offset += num_of_chains
                 if scroll_offset > chain_len - num_of_chains:
                     scroll_offset = chain_len - num_of_chains
-                    temp_menu_string = "Reached top of list!"
+                    menu_string = "Reached top of list!"
             elif menu_input == "d":
                 scroll_offset -= num_of_chains
                 if scroll_offset < 0:
                     scroll_offset = 0
-                    temp_menu_string = "Reached bottom of list!"
+                    menu_string = "Reached bottom of list!"
             elif menu_input == "q":
                 break
             # Check if input can be converted to integer
@@ -426,7 +399,7 @@ def open_chain_viewer():
                 try:
                     chain_id = int(menu_input)
                 except ValueError:
-                    temp_menu_string = colored(
+                    menu_string = colored(
                         "Please enter a valid input.", "light_red"
                         )
                     continue
@@ -434,13 +407,55 @@ def open_chain_viewer():
                     # If chain_id is valid, print chain
                     if chain_id >= 1 and chain_id <= chain_len:
                         print_chain(worksheet.row_values(chain_id))
-                        input("\nPress enter to continue...\n")
+                        input("\nPress enter to continue...")
                     else:
-                        temp_menu_string = colored(
+                        menu_string = colored(
                             "Please enter a valid chain ID.", "light_red"
                             )
 
     main()
+
+
+def print_chain_viewer_menu_string(menu_string, start_idx, end_idx):
+    """
+    If provided with a string, print that string otherwise return
+    the default chain viewer message
+    """
+    print_string = None
+
+    if menu_string:
+        print_string = menu_string
+    else:
+        print_string = (
+            "Viewing chains " +
+            f"{colored('#'+ str(start_idx + 1), 'yellow')} " +
+            f"to {colored('#'+ str(end_idx), 'yellow')}")
+
+    print(f"\n{print_string}\n")
+
+
+def print_list_of_chains(first_chain_entries, start_index, end_index):
+    """
+    Prints numbered list of every chain using
+    the first entry of each chain
+    """
+    print(colored("\n\n[Printing list of chains...]\n\n", "dark_grey"))
+
+    for index, question in enumerate(
+            first_chain_entries[start_index:end_index],
+            start=start_index + 1):
+        # Check if the value is a valid JSON string
+        try:
+            user_data_dict = json.loads(question)
+        except Exception as e:
+            print(e.args[0])
+            continue
+        else:
+            # Prints chain index and first question
+            print(
+                f"Chain {colored('#' + str(index),'yellow')}: " +
+                f"{user_data_dict['content']}"
+            )
 
 
 def print_chain_viewer_options():
