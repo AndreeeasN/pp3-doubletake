@@ -1,8 +1,11 @@
 # DoubleTake - A Python-based game of telephone
 
-[DoubleTake](https://doubletake.herokuapp.com/) was developed for anyone who enjoys a twist on traditional telephone games.
+[DoubleTake](https://doubletake.herokuapp.com/) was developed as a python-based twist on the classic game of telephone.
 
-In this game players will create chains of alternating questions and answers while attempting to unravel what previous players have said, often with unpredictable results.
+In *DoubleTake* players will create chains of alternating questions and answers while attempting to unravel what previous players have said, often with unpredictable results.<br>
+With *DoubleTake* players have an outlet to showcase their unique sense of humor, perfect for those wanting to let their creativity run wild and share a good laugh.<br>
+
+Get your creative juices flowing and most importantly, have fun!
 
 # Table of Contents
 + [UX](#ux "UX")
@@ -37,6 +40,7 @@ In this game players will create chains of alternating questions and answers whi
 ## Design
 - Certain words and phrases are colored to guide the user's eyes and make interaction more intuitive
   - As an example, questions and answers are consistently yellow/magenta throughout the game, while signatures always appear in cyan
+
   ![DoubleTake Colors](assets/images/doubletake-colors.png)
 
 - As interacting with the spreadsheet through Google API may take a few seconds, subtle loading messages have been implemented to provide the user with some level of feedback while the application is working. 
