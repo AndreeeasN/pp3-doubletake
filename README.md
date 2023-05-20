@@ -90,16 +90,6 @@ The chain viewer can be reached from the main menu, this is where all finished c
 
 The bottom of the list features the latest 8 chains, when the list of chains exceeds 8 the user may scroll through the list using *U* or *D*
 
-## Input Validation
-- Main Menu
-  - Menu input -> Simply checks if input is exactly "1", "2" or "3"
-- During game
-  - Question/Answer -> Ensures input isn't blank, string doesn't require further validation
-  - Signature -> If left blank name will automatically be set to "Anonymous" as stated during input, string requires no further validation
-- Chain Viewer
-  - Menu input -> Checks if string is alphabetic and if so if it's "U", "D" or "Q".<br> 
-  If not try converting string to integer, if succesful check if integer is a valid chain index.
-
 # Development
 
 ## Heroku Deployment
@@ -114,6 +104,16 @@ The project was deployed using Code Institute's mock terminal through Heroku (Li
 7. In the Deploy tab, select your branch and click "Deploy Branch"
 
 # Testing
+
+## Input Validation
+- Main Menu
+  - Menu input -> Checks if input is exactly "1", "2" or "3"
+- During game
+  - Question/Answer -> Ensures input isn't blank, string doesn't require further validation
+  - Signature -> If left blank name will automatically be set to "Anonymous" as stated during input, string requires no further validation
+- Chain Viewer
+  - Menu input -> Checks if string is alphabetic and if so if it's "U", "D" or "Q".<br> 
+  If not try converting string to integer, if succesful check if integer is a valid chain index.
 
 ## Validator Testing
 
