@@ -68,9 +68,11 @@ DoubleTake is heavily inspired by the classic game of telephone, where a word is
 
 ![DoubleTake Game](assets/images/doubletake-colors.png)
 
-The user will be asked to answer a player-provided question, to later try to guess the question of a player-provided answer.
-The user may also include a signature of their choosing to keep track of their previous questions/answers, if no signature is provided it will default to "Anonymous".
-Once finished answering the player will be provided with a post-game menu where all previous entries in the chain are shown.
+The user will first be asked to answer a player-provided question.<br>
+They will then be prompted to guess the question of a player-provided answer.<br>
+After both of these the user may attach a signature of their choosing to keep track of their questions/answers, if no signature is provided it will default to "Anonymous".
+
+Once finished, the user will be provided with a post-game menu where all previous entries in the chain are shown.
 
 ![DoubleTake Post-Game](assets/images/doubletake-post-game.png)
 
