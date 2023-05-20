@@ -33,9 +33,10 @@ Get your creative juices flowing and most importantly, have fun!
 ## User stories
 
 - As a user, I want to:
-  - Easily navigate through menus with minimal effort
-  - Receive clear visual feedback when entering inputs 
-  - See what came before my answer after finishing a round
+  - Play a simple yet humoristic multiplayer game of words
+  - Be able to easily navigate through menus with minimal effort
+  - Receive clear visual feedback when interacting with the terminal 
+  - See what other people have answered after finishing each round
   - Look at finished chains to see what my past contributions led up to
   - See if any new chains have been finished since last time I played
 
@@ -101,13 +102,14 @@ The bottom of the list features the latest 8 chains, when the list of chains exc
 ## Heroku Deployment
 The project was deployed using Code Institute's mock terminal through Heroku (Link [here](https://doubletake.herokuapp.com/)) using the following steps:
 
-1. Log in or create new account on [Heroku](https://dashboard.heroku.com/)
-2. Create a new Heroku App
-3. Set the buildbacks to `python` and `NodeJS` in that order
-4. Link the Heroku app to your GitHub repository
-5. In the app Settings tab, enter your credentials as a Config Var
-6. Enter key PORT with value 8000 as another Config Var
-7. In the Deploy tab, select your branch and click "Deploy Branch"
+1. Create your project using the [CI Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template)
+2. Log in or create new account on [Heroku](https://dashboard.heroku.com/)
+3. Create a new Heroku App
+4. Set the buildbacks to `python` and `NodeJS` in that order
+5. Link the Heroku app to your GitHub repository
+6. In the app Settings tab, enter your credentials as a Config Var
+7. Enter key PORT with value 8000 as another Config Var
+8. In the Deploy tab, select your branch and click "Deploy Branch"
 
 # Testing
 
