@@ -19,11 +19,10 @@ Get your creative juices flowing and most importantly, have fun!
   + [Main Menu](#main-menu "Main Menu")
   + [The Game](#the-game "The Game")
   + [Chain Viewer](#chain-viewer "Chain Viewer")
-  + [Input Validation](#input-validation "Input Validation")
 + [Development](#development "Development")
   + [Heroku Deployment](#heroku-deployment "Heroku Deployment")
-+ [Testing](#Testing "Testing")
-  + [General Testing](#general-testing "General Testing")
++ [Testing](#testing "Testing")
+  + [Input Validation](#input-validation "Input Validation")
   + [Validator Testing](#validator-testing "Validator Testing")
   + [Bugs Encountered](#bugs-encountered "Bugs Encountered")
 + [Credits](#credits "Credits")
@@ -65,12 +64,12 @@ The main menu features the title of the game and a quick introduction on what th
 
   ![DoubleTake Main Menu](assets/images/doubletake-menu.png)
 - From the main menu the user has 3 options:
-  - *1* - Starts the game
-  - *2* - Opens the chain viewer
+  - *1* - Starts [The Game](#the-game "The Game")
+  - *2* - Opens the [Chain Viewer](#chain-viewer "Chain Viewer")
   - *3* - Exits the application
 
 
-## DoubleTake - The Game
+## The Game
 DoubleTake is heavily inspired by the classic game of telephone, where a word is whispered between several people to the point where the original sentence is completely lost in translation.
 
 ![DoubleTake Game](assets/images/doubletake-colors.png)
