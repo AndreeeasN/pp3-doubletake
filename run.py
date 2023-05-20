@@ -385,7 +385,7 @@ def open_chain_viewer():
             if menu_input == "u":
                 scroll_offset += num_of_chains
                 if scroll_offset > chain_len - num_of_chains:
-                    scroll_offset = chain_len - num_of_chains
+                    scroll_offset = max(chain_len - num_of_chains, 0)
                     menu_string = "Reached top of list!"
             elif menu_input == "d":
                 scroll_offset -= num_of_chains

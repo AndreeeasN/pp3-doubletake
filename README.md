@@ -134,7 +134,9 @@ The project was deployed using Code Institute's mock terminal through Heroku (Li
 - [RESOLVED] During Heroku deployment - ERROR: No matching distribution found for pywin32==306, Push rejected, failed to compile Python app.
   - This was due to requirements.txt including requirements from my global python interpreter, this was resolved by creating a new venv (virtual environment) and rebuilding the requirements file from there
 - [RESOLVED] In the chain viewer, if the user tried scrolling up to the top of the list the chain #ID showing didn't match up
-  - This was caused by the start_index going into the negatives rather than stopping, this was resolved by using max(start value, 0) to keep the value from ever going below 0
+  - This was caused by the start_index going into the negatives rather than stopping as intended, this was resolved by using max(start value, 0) to keep the value from ever going below 0
+- [RESOLVED] In the Chain viewer, the "Viewing chain # to #" would show the incorrect numbers after scrolling upward in a non-full list
+  - This was due to scroll_offset being set to a negative value, this was fixed by using max(value, 0) to keep the value from dropping below 0
 - After deployment to Heroku, Code Institute's mock terminal appears to have a different color scheme, appearing drastically darker than that specified in the code. This has yet to be resolved.
 
 # Credits
