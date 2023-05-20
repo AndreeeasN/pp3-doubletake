@@ -2,6 +2,8 @@
 
 [DoubleTake](https://doubletake.herokuapp.com/) was developed as a python-based twist on the classic game of telephone.
 
+[![DoubleTake Terminal](assets/images/doubletake-terminal.png)](https://doubletake.herokuapp.com/)
+
 In *DoubleTake* players will create chains of alternating questions and answers while attempting to unravel what previous players have said, often with unpredictable results.<br>
 With *DoubleTake* players have an outlet to showcase their unique sense of humor, perfect for those wanting to let their creativity run wild and share a good laugh.<br>
 
